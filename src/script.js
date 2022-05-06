@@ -2,8 +2,8 @@ const KEYS_ENG = [
 	['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace'],
 	['Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'Del'],
 	['CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', 'Enter'],
-	['Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '△', 'Shift'],
-	['Ctrl', 'Win', 'Alt', 'Space', 'Alt', '◁', '▽', '▷', 'Ctrl']
+	['Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '↑', 'Shift'],
+	['Ctrl', 'Win', 'Alt', 'Space', 'Alt', '←', '↓', '→', 'Ctrl']
 ];
 
 const ROWS = 5;
@@ -17,6 +17,13 @@ BODY.appendChild(container);
 let inputWrapper = document.createElement('div');
 inputWrapper.classList.add('input-wrapper');
 inputWrapper.appendChild(document.createElement('textarea'));
+
+let logo = document.createElement('div');
+logo.classList.add('logo');
+let span = document.createElement('span');
+span.innerText = 'Underwood';
+logo.appendChild(span);
+inputWrapper.appendChild(logo);
 
 let keyboard = document.createElement('div');
 keyboard.classList.add('keyboard');
@@ -37,3 +44,6 @@ for (let i = 0; i < ROWS; ++i) {
 		}
 	}
 }
+
+
+const KEYS = document.querySelectorAll('.keys');
