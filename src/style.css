@@ -1,0 +1,136 @@
+body {
+	margin: 0;
+	overflow: scroll;
+}
+
+.container {
+	position: relative;
+
+	width: 100%;
+	height: 100%;
+
+	top: 0;
+	left: 0;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	padding: 30px 0;
+}
+
+.input-wrapper {
+	width: 892px;
+	height: 470px;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+
+textarea {
+	width: calc(100% - 15px);
+	height: 150px;
+
+	padding: 0 3px;
+	overflow: auto;
+}
+
+.keyboard {
+	width: 876px;
+	height: 298px;
+
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	column-gap: 4px;
+	row-gap: 2px;
+
+	padding: 6px;
+	background-color: #9AD1D4;
+	border-radius: 10px;
+}
+
+.keyboard .key {
+	position: relative;
+
+	width: 50px;
+	height: 50px;
+
+	color: #686763;
+	background-color: #F1DBCE;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	border: solid 2px #686763;
+	border-radius: 50%;
+
+	font-family: 'Roboto Mono', monospace;
+	font-size: 20px;
+	color: #686763;
+
+	cursor: pointer;
+	box-shadow: 0 4px #999;
+}
+
+.keyboard ._active {
+	background-color: #cdbcb3;
+	box-shadow: 0 1px #666;
+	transform: translateY(4px);
+}
+
+.keyboard #backspace,
+.keyboard #tab,
+.keyboard #delete,
+.keyboard #capslock,
+.keyboard #enter,
+.keyboard #shiftleft,
+.keyboard #shiftright,
+.keyboard #controlleft,
+.keyboard #controlright,
+.keyboard #metaleft,
+.keyboard #altleft,
+.keyboard #altright,
+.keyboard #space {
+	border-radius: 10px;
+}
+
+.keyboard #backspace {
+	width: calc(50px + 60px + 8px);
+}
+
+.keyboard #tab {
+	width: 60px;
+}
+
+.keyboard #capslock,
+.keyboard #enter,
+.keyboard #shiftleft,
+.keyboard #shiftright {
+	width: 113px;
+}
+
+.keyboard #controlleft,
+.keyboard #controlright,
+.keyboard #metaleft,
+.keyboard #altleft,
+.keyboard #altright {
+	width: 55px;
+}
+
+.keyboard #space {
+	width: 383px;
+}
+
+.ps {
+	padding: 10px 0;
+}
+
+.ps span {
+	font-family: 'Roboto Mono', monospace;
+	font-size: 15px;
+	color: #686763;
+}
