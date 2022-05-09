@@ -75,11 +75,10 @@ textarea {
 	box-shadow: 0 4px #999;
 }
 
-.keyboard ._active,
-.keyboard .key:active{
+.keyboard ._active {
 	background-color: #cdbcb3;
 	box-shadow: 0 1px #666;
-  transform: translateY(4px);
+	transform: translateY(4px);
 }
 
 .keyboard #backspace,
