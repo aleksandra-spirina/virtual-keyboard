@@ -135,7 +135,11 @@ function startInput(eventParrent) {
 		eventParrent.classList.add('_active');
 
 		if (eventParrent.id.includes('shift')) {
-			fullKeyboard((currentLang != 'ENG') ? KEYS_RU_SHIFT : KEYS_ENG_SHIFT, true);
+			if (caps) {
+				fullKeyboard((currentLang != 'ENG') ? KEYS_RU_SHIFT : KEYS_ENG_SHIFT, false);
+			} else {
+				fullKeyboard((currentLang != 'ENG') ? KEYS_RU_SHIFT : KEYS_ENG_SHIFT, true);
+			}
 			changeKeySet = true;
 		} else if (eventParrent.id === 'capslock') {
 			if (!changeKeySet) {
@@ -186,8 +190,12 @@ function endInput(eventParrent) {
 	if (eventParrent.classList.contains('key') && eventParrent.id != 'capslock') {
 		eventParrent.classList.remove('_active');
 
-		if (changeKeySet && !caps && !(keysPressed['shiftleft'] || keysPressed['shiftright'])) {
-			fullKeyboard((currentLang != 'ENG') ? KEYS_RU : KEYS_ENG, false);
+		if (changeKeySet && !(keysPressed['shiftleft'] || keysPressed['shiftright'])) {
+			if (caps) {
+				fullKeyboard((currentLang != 'ENG') ? KEYS_RU : KEYS_ENG, true);
+			} else {
+				fullKeyboard((currentLang != 'ENG') ? KEYS_RU : KEYS_ENG, false);
+			}
 			changeKeySet = false;
 		}
 	}
@@ -228,7 +236,7 @@ document.addEventListener('keydown', (e) => {
 
 document.addEventListener('keyup', (e) => {
 	let currentKey = document.getElementById(e.code.toLowerCase());
-	if(currentKey) {
+	if (currentKey) {
 		endInput(currentKey);
 	}
 });
