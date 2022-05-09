@@ -54,12 +54,6 @@ const KEYS_RU_SHIFT = [
 const KEYS_NUM = 64;
 let currentLang = 'ENG';
 
-// const file = "config.json";
-// readTextFile(file, (text) => {
-// 	let tmpObj = JSON.parse(text);
-// 	currentLang = tmpObj.lang;
-// });
-
 const BODY = document.querySelector('body');
 
 let container = document.createElement('div');
@@ -76,6 +70,12 @@ inputWrapper.appendChild(keyboard);
 
 container.appendChild(inputWrapper);
 
+let PSText = document.createElement('div');
+PSText.classList.add('ps');
+let span = document.createElement('span');
+span.innerText = 'P.S. Created in Windows. To change the language: Shift + Alt.';
+PSText.appendChild(span);
+container.appendChild(PSText);
 
 function createKeyboard() {
 	keyboard.innerHTML = '';
@@ -99,7 +99,24 @@ function fullKeyboard(KEYS_SET, toUpper = false) {
 }
 
 createKeyboard();
-fullKeyboard(KEYS_ENG);
+currentLang = localStorage.lang || currentLang;
+fullKeyboard((currentLang === "ENG") ? KEYS_ENG : KEYS_RU);
+
+function setCaretPosition(ctrl, pos) {
+	// Modern browsers
+	if (ctrl.setSelectionRange) {
+		ctrl.focus();
+		ctrl.setSelectionRange(pos, pos);
+
+		// IE8 and below
+	} else if (ctrl.createTextRange) {
+		var range = ctrl.createTextRange();
+		range.collapse(true);
+		range.moveEnd('character', pos);
+		range.moveStart('character', pos);
+		range.select();
+	}
+}
 
 const KEYS = document.querySelectorAll('.key');
 let keysPressed = {};
@@ -111,9 +128,8 @@ let cursorPosition = {
 let changeKeySet = false;
 let caps = false;
 
-document.addEventListener('mousedown', (e) => {
-	let eventParrent = e.target;
-
+function startInput(eventParrent) {
+	keysPressed[eventParrent.id] = true;
 	if (eventParrent.classList.contains('key')) {
 
 		eventParrent.classList.add('_active');
@@ -157,51 +173,62 @@ document.addEventListener('mousedown', (e) => {
 			document.querySelector('textarea').value += '\n';
 			cursorPosition.y++;
 		} else if (eventParrent.id.includes('arrow')) {
-			setCaretToPos(document.getElementById('textarea'), 1);
+			// TODO: setCaretPosition(...);
+			document.querySelector('textarea').value += eventParrent.innerText;
+		} else if (eventParrent.id === 'tab') {
+			document.querySelector('textarea').value += '\xa0\xa0\xa0\xa0';
 		}
 	}
-});
+}
 
-document.addEventListener('mouseup', (e) => {
-	let eventParrent = e.target;
+function endInput(eventParrent) {
+	keysPressed[eventParrent.id] = false;
 	if (eventParrent.classList.contains('key') && eventParrent.id != 'capslock') {
 		eventParrent.classList.remove('_active');
 
-		if (changeKeySet && !caps) {
+		if (changeKeySet && !caps && !(keysPressed['shiftleft'] || keysPressed['shiftright'])) {
 			fullKeyboard((currentLang != 'ENG') ? KEYS_RU : KEYS_ENG, false);
 			changeKeySet = false;
 		}
 	}
+}
+
+document.addEventListener('mousedown', (e) => {
+	let eventParrent = e.target;
+	startInput(eventParrent);
+});
+
+document.addEventListener('mouseup', (e) => {
+	let eventParrent = e.target;
+	endInput(eventParrent);
 });
 
 document.addEventListener('keydown', (e) => {
-	keysPressed[e.code] = true;
-	document.querySelector('textarea').focus();
+	keysPressed[e.code.toLowerCase()] = true;
+	document.querySelector('textarea').blur();
 
-	if ((keysPressed['ShiftLeft'] && keysPressed['AltLeft']) ||
-		(keysPressed['ShiftRight'] && keysPressed['AltRight'])) {
+	if ((keysPressed['shiftleft'] && keysPressed['altleft']) ||
+		(keysPressed['shiftright'] && keysPressed['altright'])) {
+		currentLang = localStorage.lang || currentLang;
 		fullKeyboard((currentLang === 'ENG') ? KEYS_RU : KEYS_ENG);
 		currentLang = (currentLang === 'ENG') ? 'RU' : 'ENG';
+		localStorage.setItem('lang', currentLang);
 	}
 
 	let currentKey = document.getElementById(e.code.toLowerCase());
 	if (currentKey) {
-		currentKey.classList.add('_active');
-
 		if (e.code === 'Tab' || e.code.includes('Alt')) {
-			console.log('focus');
 			currentKey.focus();
 			e.preventDefault();
 		}
-
+		startInput(currentKey);
 	}
 
 });
 
 document.addEventListener('keyup', (e) => {
-	keysPressed[e.code] = false;
 	let currentKey = document.getElementById(e.code.toLowerCase());
-	if (currentKey) {
-		currentKey.classList.remove('_active');
+	if(currentKey) {
+		endInput(currentKey);
 	}
 });
