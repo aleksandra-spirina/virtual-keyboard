@@ -1,6 +1,6 @@
 body {
 	margin: 0;
-	overflow: auto;
+	overflow: scroll;
 }
 
 .container {
@@ -17,11 +17,12 @@ body {
 	align-items: center;
 
 	padding: 30px 0;
+	overflow: scroll;
 }
 
 .input-wrapper {
 	width: 892px;
-	height: 550px;
+	height: 500px;
 
 	background-color: #9AD1D4;
 
@@ -38,13 +39,6 @@ textarea {
 	padding: 0;
 }
 
-.logo span {
-	font-family: 'Oleo Script Swash Caps', cursive;
-	font-size: 32px;
-	color: #7e5c04;
-	letter-spacing: 0.06em;
-}
-
 .keyboard {
 	width: 876px;
 	height: 298px;
@@ -58,10 +52,13 @@ textarea {
 	padding: 6px;
 }
 
-.keyboard .keys {
+.keyboard .key {
+	position: relative;
+
 	width: 50px;
 	height: 50px;
 
+	color: #686763;
 	background-color: #F1DBCE;
 	display: flex;
 	justify-content: center;
@@ -73,17 +70,30 @@ textarea {
 	font-family: 'Roboto Mono', monospace;
 	font-size: 20px;
 	color: #686763;
+
+	cursor: pointer;
+	box-shadow: 0 4px #999;
+}
+
+.keyboard ._active,
+.keyboard .key:active{
+	background-color: #cdbcb3;
+	box-shadow: 0 1px #666;
+  transform: translateY(4px);
 }
 
 .keyboard #backspace,
 .keyboard #tab,
-.keyboard #del,
+.keyboard #delete,
 .keyboard #capslock,
 .keyboard #enter,
-.keyboard #shift,
-.keyboard #ctrl,
-.keyboard #win,
-.keyboard #alt,
+.keyboard #shiftleft,
+.keyboard #shiftright,
+.keyboard #controlleft,
+.keyboard #controlright,
+.keyboard #metaleft,
+.keyboard #altleft,
+.keyboard #altright,
 .keyboard #space {
 	border-radius: 10px;
 }
@@ -98,13 +108,16 @@ textarea {
 
 .keyboard #capslock,
 .keyboard #enter,
-.keyboard #shift {
+.keyboard #shiftleft,
+.keyboard #shiftright {
 	width: 113px;
 }
 
-.keyboard #ctrl,
-.keyboard #win,
-.keyboard #alt {
+.keyboard #controlleft,
+.keyboard #controlright,
+.keyboard #metaleft,
+.keyboard #altleft,
+.keyboard #altright {
 	width: 55px;
 }
 
