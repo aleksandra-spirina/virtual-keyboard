@@ -143,7 +143,7 @@ function startInput(eventParrent) {
 			changeKeySet = true;
 		} else if (eventParrent.id === 'capslock') {
 			if (!changeKeySet) {
-				fullKeyboard((currentLang != 'ENG') ? KEYS_RU_SHIFT : KEYS_ENG_SHIFT, true);
+				fullKeyboard((currentLang != 'ENG') ? KEYS_RU : KEYS_ENG, true);
 				changeKeySet = true;
 				caps = true;
 			} else {
